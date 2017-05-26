@@ -3,10 +3,12 @@
 #include "state.h"
 #include "programcontext.h"
 
-class IDLE: public State
+class s_IDLE: public State
 {
 public:
-    IDLE();
+    s_IDLE();
+
+    void idle(ProgramContext *p);
 };
 
 #endif // IDLE_H

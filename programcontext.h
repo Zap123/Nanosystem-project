@@ -2,24 +2,25 @@
 #define PROGRAMCONTEXT_H
 
 #include <QDebug>
-#include "state.h"
 
 class ProgramContext
 {
+private:
     class State *current;
 
 public:
     ProgramContext();
-    void getCurrent();
     void setCurrent(State *s){
-        this->current = s;
+        current = s;
         qDebug() << "Changing State";
     }
+
+    void getCurrent();
+
+    //states declaration
     void idle();
     void calibration();
     void measure();
-
-
 
 };
 

@@ -1,10 +1,10 @@
 #include <typeinfo>
 #include "programcontext.h"
-#include "idle.h"
+#include "s_idle.h"
 
 ProgramContext::ProgramContext()
 {
-    setCurrent(new IDLE());
+    current = new s_IDLE();
     getCurrent();
 }
 

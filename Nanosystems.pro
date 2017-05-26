@@ -17,12 +17,12 @@ SOURCES += main.cpp\
     helper.cpp \
     state.cpp \
     programcontext.cpp \
-    idle.cpp
+    s_idle.cpp
 
 HEADERS  += mainwindow.h \
     state.h \
     programcontext.h \
-    idle.h
+    s_idle.h
 
 FORMS    += mainwindow.ui
 

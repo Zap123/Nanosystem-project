@@ -8,8 +8,16 @@ class State
 {
 public:
     State();
-    virtual void idle(ProgramContext *p){qDebug() << "Already in the state IDLE";}
-    virtual void calibration(ProgramContext *p){qDebug() << "Already in the state CALIBRATION";}
-    virtual void measure(ProgramContext *p){qDebug() << "Already in the state MEASURE";}
+    virtual void idle(ProgramContext *p){
+        qDebug() << "Already in the state IDLE";
+    }
+
+    virtual void calibration(ProgramContext *p){
+        qDebug() << "Already in the state CALIBRATION";
+    }
+
+    virtual void measure(ProgramContext *p){
+        qDebug() << "Already in the state MEASURE";
+    }
 };
 #endif // STATE_H
