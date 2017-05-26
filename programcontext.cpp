@@ -12,6 +12,14 @@ void ProgramContext::idle(){
     current->idle(this);
 }
 
+void ProgramContext::calibration(){
+    current->calibration(this);
+}
+
+void ProgramContext::measure(){
+    current->measure(this);
+}
+
 void ProgramContext::getCurrent(){
     qDebug() << "Current state: " << typeid(current).name();
 }

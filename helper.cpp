@@ -1,20 +1,40 @@
 #include <QFile>
-#include <QStringList>
+#include <QVector>
 #include <QDebug>
+#include <helper.h>
 
-void parseASCII(){
+void test_parseASCII(QVector<double> *x_v, QVector<double> *y_i){
+    //TODO:MAP?
     QFile file(":/test/testASCII.txt");
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Error:" << file.errorString();
     }
 
 
-    QStringList wordList;
     while(!file.atEnd()){
         QByteArray line = file.readLine();
-        wordList.append(line.split(' ').first());
+        QList<QByteArray> splt = line.split(' ');
 
+        x_v->append(splt.first().toDouble());
+        y_i->append(splt.last().simplified().toDouble()); //remove carriage return
     }
+}
 
-    qDebug() << "Parsed:" << wordList;
+QVector<double> calibration_parameter(QVector<double> *x_v, QVector<double> *y_i){
+    double x_a, x_b, y_a, y_b;
+    double m, q;
+    QVector<double> parameter;
+
+    x_a = x_v->first();
+    x_b = x_v->last();
+    y_a = y_i->first();
+    y_b = y_i->last();
+
+    m = (y_b - y_a)/(x_b - x_a);
+    q = y_a - m*x_a;
+
+    parameter.append(m);
+    parameter.append(q);
+
+    return parameter;
 }

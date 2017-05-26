@@ -17,14 +17,20 @@ SOURCES += main.cpp\
     helper.cpp \
     state.cpp \
     programcontext.cpp \
-    s_idle.cpp
+    s_idle.cpp \
+    s_calibration.cpp \
+    calibrate.cpp
 
 HEADERS  += mainwindow.h \
+    helper.h \
     state.h \
     programcontext.h \
-    s_idle.h
+    s_idle.h \
+    s_calibration.h \
+    calibrate.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    calibrate.ui
 
 OTHER_FILES +=
 
