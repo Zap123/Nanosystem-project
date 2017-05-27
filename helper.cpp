@@ -4,7 +4,6 @@
 #include <helper.h>
 
 void test_parseASCII(QVector<double> *x_v, QVector<double> *y_i){
-    //TODO:MAP?
     QFile file(":/test/testASCII.txt");
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Error:" << file.errorString();
@@ -37,4 +36,8 @@ QVector<double> calibration_parameter(QVector<double> *x_v, QVector<double> *y_i
     parameter.append(q);
 
     return parameter;
+}
+
+double cal_line(double x, double m, double q){
+    return m*x+q;
 }

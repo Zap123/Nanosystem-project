@@ -3,11 +3,11 @@
 
 s_CALIBRATION::s_CALIBRATION()
 {
-    Calibrate w = new Calibrate();
+    w = new Calibrate();
     w->show();
 }
 
-s_CALIBRATION::~s_CALIBRATION()
+s_CALIBRATION::~ s_CALIBRATION()
 {
     delete w;
 }
