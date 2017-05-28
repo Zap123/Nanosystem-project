@@ -15,13 +15,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    ProgramContext *context;
-
 
 private slots:
     void on_actionCalibrate_triggered();
 
     void on_actionMeasure_triggered();
+
+signals:
+    //state you want to move
+    void changeState(QString const &name);
 
 private:
     Ui::MainWindow *ui;

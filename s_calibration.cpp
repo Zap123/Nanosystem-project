@@ -1,8 +1,9 @@
 #include <QMessageBox>
 #include "s_calibration.h"
 
-s_CALIBRATION::s_CALIBRATION()
+s_CALIBRATION::s_CALIBRATION(QObject *parent) : State(parent, "CALIBRATION")
 {
+    this->setObjectName("IDLE");
     w = new Calibrate();
     w->show();
 }
@@ -24,8 +25,7 @@ void s_CALIBRATION::calibration(ProgramContext *p){
     }
     else{
         QString invState = "Already in the calibration State";
-        QMessageBox messageBox;
-        messageBox.critical(0, "Invalid State", invState);
+        QMessageBox::critical(0, "Invalid State", invState);
 
         qDebug() << invState;
     }

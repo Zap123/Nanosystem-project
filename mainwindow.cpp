@@ -6,21 +6,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    context = new ProgramContext();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete context;
 }
 
 void MainWindow::on_actionCalibrate_triggered()
 {
-    context->calibration();
+    emit(changeState("CALIBRATION"));
 }
 
 void MainWindow::on_actionMeasure_triggered()
 {
-    context->measure();
+    emit(changeState("MEASURE"));
 }

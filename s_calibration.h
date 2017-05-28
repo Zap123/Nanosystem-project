@@ -8,8 +8,9 @@
 class s_CALIBRATION : public State
 {
 public:
-    s_CALIBRATION();
+    s_CALIBRATION(QObject *parent);
     ~s_CALIBRATION();
+
     Calibrate *w; //dialog
     void idle(ProgramContext *p);
     void calibration(ProgramContext *p);

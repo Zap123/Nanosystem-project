@@ -7,7 +7,7 @@
 class s_IDLE: public State
 {
 public:
-    s_IDLE();
+    s_IDLE(QObject *parent);
 
     void idle(ProgramContext *p);
     void calibration(ProgramContext *p);

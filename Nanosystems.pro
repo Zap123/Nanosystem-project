@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     programcontext.cpp \
     s_idle.cpp \
     s_calibration.cpp \
-    calibrate.cpp
+    calibrate.cpp \
+    s_measure.cpp
 
 HEADERS  += mainwindow.h \
     helper.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     programcontext.h \
     s_idle.h \
     s_calibration.h \
-    calibrate.h
+    calibrate.h \
+    s_measure.h
 
 FORMS    += mainwindow.ui \
     calibrate.ui

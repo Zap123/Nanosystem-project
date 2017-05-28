@@ -2,11 +2,20 @@
 #include "programcontext.h"
 #include "s_idle.h"
 
-ProgramContext::ProgramContext()
+QVector<double> ProgramContext::cal_parameter(2);
+
+ProgramContext::ProgramContext(QObject *parent) : QObject(parent)
 {
-    current = new s_IDLE();
+    current = new s_IDLE(this);
     getCurrent();
 }
+
+
+ProgramContext::~ProgramContext()
+{
+    delete current;
+}
+
 
 void ProgramContext::idle(){
     current->idle(this);
@@ -21,5 +30,15 @@ void ProgramContext::measure(){
 }
 
 void ProgramContext::getCurrent(){
-    qDebug() << "Current state: " << typeid(current).name();
+    qDebug() << "Current state: " << current->objectName();
+}
+
+void ProgramContext::makeState(const QString &name){
+    if(name == "IDLE")
+        idle();
+    else if(name == "CALIBRATION")
+        calibration();
+    else
+        measure();
+
 }

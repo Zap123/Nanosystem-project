@@ -4,10 +4,12 @@
 #include <QDebug>
 #include "programcontext.h"
 
-class State
+class State : public QObject
 {
+    Q_OBJECT
+
 public:
-    State();
+    State(QObject *parent = 0, const  char *name = "no_name");
     virtual void idle(ProgramContext *p){
         qDebug() << "Already in the state IDLE";
     }
