@@ -70,3 +70,16 @@ void MainWindow::readData(){
     qDebug() << "READ:";
     qDebug() << tcpSocket->readAll();
 }
+
+int MainWindow::showCalibrationDialog(int s){
+    qDebug() << "Opening Caliration Dialog";
+
+    if(!cal_win)
+        cal_win = new Calibrate(this);
+    if(!cal_win->isVisible()){
+        cal_win->show();
+        s= 0;
+    }
+    else
+        s= 1;
+}

@@ -2,6 +2,5 @@
 
 s_MEASURE::s_MEASURE()
 {
-    this->setObjectName("MEASURE");
 }
 

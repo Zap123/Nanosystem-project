@@ -16,6 +16,7 @@ void s_IDLE::idle(ProgramContext *p){
 void s_IDLE::calibration(ProgramContext *p){
     qDebug() << "Moving to Calibration Phase";
     p->setCurrent(new s_CALIBRATION(p));
+    p->openCalibration();
 
     delete this;
 }

@@ -14,6 +14,9 @@ int main(int argc, char *argv[])
     //connect MainWindow and ProgramContext(state machine)
     QObject::connect( &w, SIGNAL(changeState(QString)), context, SLOT(makeState(QString)) );
 
+    //Calibration dialog
+    QObject::connect(context, SIGNAL(requestCalibrationDialog()), &w, SLOT(showCalibrationDialog()));
+
 
     return a.exec();
 }

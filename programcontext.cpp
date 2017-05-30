@@ -1,4 +1,3 @@
-#include <typeinfo>
 #include "programcontext.h"
 #include "s_idle.h"
 
@@ -46,4 +45,7 @@ void ProgramContext::makeState(const QString &name){
             this, SLOT(instanciateConnection()));
 
 }
-\
+
+void ProgramContext::openCalibration(){
+    emit(requestCalibrationDialog());
+}

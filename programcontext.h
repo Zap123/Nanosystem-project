@@ -24,12 +24,16 @@ public:
 
     //global calibration parameter
     static QVector<double> cal_parameter;
+    void openCalibration();
 
     //states declaration
     void idle();
     void calibration();
     void measure();
 
+signals:
+    void requestCalibrationDialog();
+    void calibrationDialogStatus(int *s);
 
 private slots:
     void makeState(QString const &name);

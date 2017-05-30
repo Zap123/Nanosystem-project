@@ -5,7 +5,7 @@
 #include <QTcpSocket>
 #include <QMainWindow>
 #include "programcontext.h"
-
+#include "calibrate.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +18,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    Calibrate *cal_win = 0;
+
+    //Network Config
     QTcpSocket *tcpSocket = 0;
     const QString ipAddress = "localhost";
     const int port = 5040;
@@ -31,6 +34,9 @@ private slots:
     void instanciateConnection();
     void displayError(QAbstractSocket::SocketError socketError);
     void readData();
+    int showCalibrationDialog(int s);
+
+
 
 signals:
     //state you want to move
