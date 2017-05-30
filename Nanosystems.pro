@@ -16,7 +16,7 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     helper.cpp \
     state.cpp \
-    programcontext.cpp \
+    #programcontext.cpp \
     s_idle.cpp \
     s_calibration.cpp \
     calibrate.cpp \
@@ -25,7 +25,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     helper.h \
     state.h \
-    programcontext.h \
+    #programcontext.h \
     s_idle.h \
     s_calibration.h \
     calibrate.h \

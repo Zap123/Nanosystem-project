@@ -9,20 +9,20 @@ s_IDLE::s_IDLE(QObject *parent) : State(parent, "IDLE")
 {
 }
 
-void s_IDLE::idle(ProgramContext *p){
+void s_IDLE::idle(MainWindow *p){
     qDebug() << "Test";
 }
 
-void s_IDLE::calibration(ProgramContext *p){
+void s_IDLE::calibration(MainWindow *p){
     qDebug() << "Moving to Calibration Phase";
     p->setCurrent(new s_CALIBRATION(p));
-    p->openCalibration();
+    p->showCalibrationDialog();
 
     delete this;
 }
 
 
-void s_IDLE::measure(ProgramContext *p){
+void s_IDLE::measure(MainWindow *p){
     QString invStateError = "You must calibrate the sensor before measuring";
 
     qDebug() << invStateError;

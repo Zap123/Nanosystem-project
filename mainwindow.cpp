@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include "s_idle.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,21 +8,43 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->statusBar->showMessage("Disconnected");
+
+
+    setCurrent(new s_IDLE(this));
+    getCurrent();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete current;
 }
+
+void MainWindow::idle(){
+    current->idle(this);
+}
+
+void MainWindow::calibration(){
+    current->calibration(this);
+}
+
+void MainWindow::measure(){
+    current->measure(this);
+}
+
+void MainWindow::getCurrent(){
+    qDebug() << "Current state: " << current->objectName();
+}
+
 
 void MainWindow::on_actionCalibrate_triggered()
 {
-    emit(changeState("CALIBRATION"));
+    calibration();
 }
 
 void MainWindow::on_actionMeasure_triggered()
 {
-    emit(changeState("MEASURE"));
+    measure();
 }
 
 void MainWindow::connected()
@@ -71,15 +93,23 @@ void MainWindow::readData(){
     qDebug() << tcpSocket->readAll();
 }
 
-int MainWindow::showCalibrationDialog(int s){
+int MainWindow::showCalibrationDialog(){
     qDebug() << "Opening Caliration Dialog";
 
-    if(!cal_win)
+    if(!cal_win){
         cal_win = new Calibrate(this);
+        QObject::connect(cal_win, SIGNAL(parameter(QVector<double>*)), this, SLOT(setParameter(QVector<double>*)));
+    }
+
     if(!cal_win->isVisible()){
         cal_win->show();
-        s= 0;
+        return 0;
     }
     else
-        s= 1;
+        return 1;
+}
+
+void MainWindow::setParameter(QVector<double> *par){
+    cal_parameter = par;
+    qDebug() << cal_parameter->at(0);
 }

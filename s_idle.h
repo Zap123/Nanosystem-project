@@ -2,7 +2,7 @@
 #define IDLE_H
 
 #include "state.h"
-#include "programcontext.h"
+#include "mainwindow.h"
 
 class s_IDLE: public State
 {
@@ -10,9 +10,9 @@ class s_IDLE: public State
 public:
     s_IDLE(QObject *parent);
 
-    void idle(ProgramContext *p);
-    void calibration(ProgramContext *p);
-    void measure(ProgramContext *p);
+    void idle(MainWindow *p);
+    void calibration(MainWindow *p);
+    void measure(MainWindow *p);
 };
 
 #endif // IDLE_H

@@ -2,23 +2,22 @@
 #define STATE_H
 
 #include <QDebug>
-#include "programcontext.h"
+#include "mainwindow.h"
 
 class State : public QObject
 {
     Q_OBJECT
-
 public:
     State(QObject *parent = 0, const  char *name = "no_name");
-    virtual void idle(ProgramContext *p){
+    virtual void idle(MainWindow *p){
         qDebug() << "Already in the state IDLE";
     }
 
-    virtual void calibration(ProgramContext *p){
+    virtual void calibration(MainWindow *p){
         qDebug() << "Already in the state CALIBRATION";
     }
 
-    virtual void measure(ProgramContext *p){
+    virtual void measure(MainWindow *p){
         qDebug() << "Already in the state MEASURE";
     }
 

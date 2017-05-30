@@ -4,8 +4,8 @@
 #include <QAbstractSocket>
 #include <QTcpSocket>
 #include <QMainWindow>
-#include "programcontext.h"
 #include "calibrate.h"
+#include <QDebug>
 
 namespace Ui {
 class MainWindow;
@@ -14,6 +14,9 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+private:
+    class State *current;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -25,6 +28,23 @@ public:
     const QString ipAddress = "localhost";
     const int port = 5040;
 
+    void setCurrent(State *s){
+        current = s;
+    }
+
+    void getCurrent();
+
+    //calibration parameter
+    QVector<double> *cal_parameter;
+    void openCalibration();
+
+    //states declaration
+    void idle();
+    void calibration();
+    void measure();
+
+    int showCalibrationDialog();
+
 private slots:
     void on_actionCalibrate_triggered();
     void on_actionMeasure_triggered();
@@ -34,7 +54,8 @@ private slots:
     void instanciateConnection();
     void displayError(QAbstractSocket::SocketError socketError);
     void readData();
-    int showCalibrationDialog(int s);
+    void setParameter(QVector<double> *par);
+
 
 
 
