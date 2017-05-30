@@ -38,7 +38,35 @@ void MainWindow::disconnected()
 
 void MainWindow::on_actionConnect_triggered()
 {
-    emit(startConnection());
+    instanciateConnection();
 }
 
+void MainWindow::instanciateConnection(){
+    if(!tcpSocket){
+        qDebug() << "Connecting";
+        tcpSocket = new QTcpSocket(this);
+        tcpSocket->connectToHost(ipAddress, port);
 
+        //Show the status of the connection in the status bar
+        connect(tcpSocket, SIGNAL(connected()),
+                this, SLOT(connected()));
+        connect(tcpSocket, SIGNAL(disconnected()),
+                this, SLOT(disconnected()));
+        connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
+                this, SLOT(displayError(QAbstractSocket::SocketError)));
+
+        tcpSocket->write("c");
+        connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readData()));
+
+    }
+}
+
+void MainWindow::displayError(QAbstractSocket::SocketError socketError){
+    qDebug() << "NETWORK ERROR:";
+    qDebug() << socketError;
+}
+
+void MainWindow::readData(){
+    qDebug() << "READ:";
+    qDebug() << tcpSocket->readAll();
+}

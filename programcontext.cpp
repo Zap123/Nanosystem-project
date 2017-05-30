@@ -46,38 +46,4 @@ void ProgramContext::makeState(const QString &name){
             this, SLOT(instanciateConnection()));
 
 }
-
-void ProgramContext::instanciateConnection(){
-    if(!tcpSocket){
-        qDebug() << "Connecting";
-        tcpSocket = new QTcpSocket(this);
-        tcpSocket->connectToHost(ipAddress, port);
-
-        //Show the status of the connection in the status bar
-        connect(tcpSocket, SIGNAL(connected()),
-                this, SIGNAL(connected()));
-        connect(tcpSocket, SIGNAL(disconnected()),
-                this, SIGNAL(disconnected()));
-        connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
-                this, SLOT(displayError(QAbstractSocket::SocketError)));
-
-        tcpSocket->write("c");
-        connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readData()));
-
-    }
-}
-
-void ProgramContext::displayError(QAbstractSocket::SocketError socketError){
-    qDebug() << "NETWORK ERROR:";
-    qDebug() << socketError;
-}
-
-void ProgramContext::readData(){
-    qDebug() << "READ:";
-    QDataStream in(tcpSocket);
-    in.setVersion(QDataStream::Qt_4_0);
-
-    QString line;
-    in >> line;
-    qDebug() << line;
-}
+\

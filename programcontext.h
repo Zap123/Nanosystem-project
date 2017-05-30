@@ -3,8 +3,6 @@
 
 #include <QVector>
 #include <QApplication>
-#include <QAbstractSocket>
-#include <QTcpSocket>
 #include "mainwindow.h"
 
 class ProgramContext : public QObject
@@ -17,10 +15,6 @@ private:
 public:
     ProgramContext(QObject *parent = 0);
     ~ProgramContext(); 
-
-    QTcpSocket *tcpSocket = 0;
-    const QString ipAddress = "localhost";
-    const int port = 5040;
 
     void setCurrent(State *s){
         current = s;
@@ -36,15 +30,9 @@ public:
     void calibration();
     void measure();
 
-signals:
-    void connected();
-    void disconnected();
 
 private slots:
     void makeState(QString const &name);
-    void instanciateConnection();
-    void displayError(QAbstractSocket::SocketError socketError);
-    void readData();
 
 };
 
