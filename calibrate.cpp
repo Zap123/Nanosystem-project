@@ -18,6 +18,9 @@ Calibrate::~Calibrate()
 
 void Calibrate::on_pushButton_clicked()
 {
+    emit(connect());
+    //emit(recvData());
+
     QVector<double> x;
     QVector<double> y;
 

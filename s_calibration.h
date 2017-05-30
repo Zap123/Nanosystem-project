@@ -7,6 +7,7 @@
 
 class s_CALIBRATION : public State
 {
+
 public:
     s_CALIBRATION(QObject *parent);
     ~s_CALIBRATION();
@@ -15,6 +16,8 @@ public:
     void idle(ProgramContext *p);
     void calibration(ProgramContext *p);
     void measure(ProgramContext *p);
+private slots:
+    void connect();
 };
 
 #endif // S_CALIBRATION_H

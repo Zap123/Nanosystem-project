@@ -5,6 +5,7 @@
 
 class s_MEASURE : public State
 {
+
 public:
     s_MEASURE();
 };

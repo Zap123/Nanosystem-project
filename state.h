@@ -21,5 +21,10 @@ public:
     virtual void measure(ProgramContext *p){
         qDebug() << "Already in the state MEASURE";
     }
+
+
+signals:
+    void connect();
+    void recvData();
 };
 #endif // STATE_H
