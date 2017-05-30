@@ -5,15 +5,16 @@
 
 class s_CALIBRATION : public State
 {
-
+    Q_OBJECT
 public:
     s_CALIBRATION(QObject *parent);
 
     void idle(MainWindow *p);
     void calibration(MainWindow *p);
     void measure(MainWindow *p);
-private slots:
-    void connect();
+
+signals:
+    void requestData();
 };
 
 #endif // S_CALIBRATION_H

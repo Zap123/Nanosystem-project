@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <helper.h>
 
-void test_parseASCII(QVector<double> *x_v, QVector<double> *y_i){
+void test_parseASCII(QVector<double> *x_v, QVector<double> *y_i, QByteArray *q){
     QFile file(":/test/testASCII.txt");
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Error:" << file.errorString();
@@ -17,6 +17,22 @@ void test_parseASCII(QVector<double> *x_v, QVector<double> *y_i){
         x_v->append(splt.first().toDouble());
         y_i->append(splt.last().simplified().toDouble()); //remove carriage return
     }
+}
+
+void parseASCII(QVector<double> *x_v, QVector<double> *y_i, QByteArray *q){
+
+
+        QList<QByteArray> lines = q->split('\n');
+
+        foreach(QByteArray line, lines){
+            QList<QByteArray> element = line.split(' ');
+            qDebug(line);
+            if(!line.isEmpty()){
+                x_v->append(element.first().toDouble());
+                y_i->append(element.last().toDouble());
+            }
+        }
+
 }
 
 QVector<double> calibration_parameter(QVector<double> *x_v, QVector<double> *y_i){

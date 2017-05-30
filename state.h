@@ -9,6 +9,7 @@ class State : public QObject
     Q_OBJECT
 public:
     State(QObject *parent = 0, const  char *name = "no_name");
+
     virtual void idle(MainWindow *p){
         qDebug() << "Already in the state IDLE";
     }
@@ -24,6 +25,5 @@ public:
 
 signals:
     void connect();
-    void recvData();
 };
 #endif // STATE_H

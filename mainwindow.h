@@ -35,7 +35,7 @@ public:
     void getCurrent();
 
     //calibration parameter
-    QVector<double> *cal_parameter;
+    QVector<double> cal_parameter;
     void openCalibration();
 
     //states declaration
@@ -43,7 +43,7 @@ public:
     void calibration();
     void measure();
 
-    int showCalibrationDialog();
+    void showCalibrationDialog();
 
 private slots:
     void on_actionCalibrate_triggered();
@@ -53,11 +53,10 @@ private slots:
     void on_actionConnect_triggered();
     void instanciateConnection();
     void displayError(QAbstractSocket::SocketError socketError);
-    void readData();
-    void setParameter(QVector<double> *par);
-
-
-
+    void processCalibration();
+    void processVoltimetry();
+    void setParameter(QVector<double> par);
+    void sendData();
 
 signals:
     //state you want to move

@@ -6,7 +6,7 @@
 
 class s_IDLE: public State
 {
-
+    Q_OBJECT
 public:
     s_IDLE(QObject *parent);
 

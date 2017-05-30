@@ -14,9 +14,10 @@ void s_IDLE::idle(MainWindow *p){
 }
 
 void s_IDLE::calibration(MainWindow *p){
-    qDebug() << "Moving to Calibration Phase";
     p->setCurrent(new s_CALIBRATION(p));
     p->showCalibrationDialog();
+
+    p->getCurrent();
 
     delete this;
 }

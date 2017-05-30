@@ -14,12 +14,15 @@ class Calibrate : public QDialog
 public:
     explicit Calibrate(QWidget *parent = 0);
     ~Calibrate();
+    void calc_par(QByteArray *q);
 
 private slots:
     void on_pushButton_clicked();
 
 signals:
-    void parameter(QVector<double> *par);
+    void parameter(QVector<double> par);
+    void connect();
+    void requestData();
 
 private:
     Ui::Calibrate *ui;

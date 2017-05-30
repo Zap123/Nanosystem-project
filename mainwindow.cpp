@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "s_idle.h"
+#include "helper.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +19,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete current;
+    tcpSocket->close();
 }
 
 void MainWindow::idle(){
@@ -77,10 +79,11 @@ void MainWindow::instanciateConnection(){
         connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
                 this, SLOT(displayError(QAbstractSocket::SocketError)));
 
-        tcpSocket->write("c");
-        connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readData()));
+        //connect socket new data with calibration process fn
+        QObject::connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(processCalibration()));
 
     }
+
 }
 
 void MainWindow::displayError(QAbstractSocket::SocketError socketError){
@@ -88,28 +91,64 @@ void MainWindow::displayError(QAbstractSocket::SocketError socketError){
     qDebug() << socketError;
 }
 
-void MainWindow::readData(){
-    qDebug() << "READ:";
-    qDebug() << tcpSocket->readAll();
+void MainWindow::sendData(){
+    tcpSocket->write("0");
 }
 
-int MainWindow::showCalibrationDialog(){
-    qDebug() << "Opening Caliration Dialog";
+void MainWindow::processCalibration(){
+    qDebug() << "READ:";
+    QByteArray readData = tcpSocket->readAll();
+    qDebug() << readData;
+
+    cal_win->calc_par(&readData);
+}
+
+void MainWindow::processVoltimetry(){
+    qDebug() << "READ:";
+    QByteArray readData = tcpSocket->readAll();
+    qDebug() << readData;
+
+    QVector<double> v,I;
+    parseASCII(&v,&I,&readData);
+
+
+    //qDebug()<< cal_parameter.isEmpty();
+    double I_cal = cal_line(v.at(0),cal_parameter.at(0), cal_parameter.at(1));
+    double out = I.at(0) - I_cal;
+
+    qDebug() << "V:" << v.at(0);
+    qDebug() << "I:" << out;
+
+    //qDebug() << "I_cal:";
+    //qDebug() << I_cal;
+
+    ui->lcdV->setText(QString::number(v.at(0)));
+    ui->lcdI->setText(QString::number(out));
+}
+
+void MainWindow::showCalibrationDialog(){
+    qDebug() << "Opening Calibration Dialog";
 
     if(!cal_win){
         cal_win = new Calibrate(this);
-        QObject::connect(cal_win, SIGNAL(parameter(QVector<double>*)), this, SLOT(setParameter(QVector<double>*)));
+        //save cal data
+        QObject::connect(cal_win, SIGNAL(parameter(QVector<double>)), this, SLOT(setParameter(QVector<double>)));
+
+        //open connection from dialog
+        QObject::connect(cal_win, SIGNAL(connect()), this, SLOT(instanciateConnection()));
+        QObject::connect(cal_win, SIGNAL(requestData()), this, SLOT(sendData()));
+
     }
 
     if(!cal_win->isVisible()){
         cal_win->show();
-        return 0;
     }
-    else
-        return 1;
+
 }
 
-void MainWindow::setParameter(QVector<double> *par){
+void MainWindow::setParameter(QVector<double> par){
     cal_parameter = par;
-    qDebug() << cal_parameter->at(0);
+    qDebug() << "parameters:";
+    qDebug() << par.at(0);
+    qDebug() << par.at(1);
 }

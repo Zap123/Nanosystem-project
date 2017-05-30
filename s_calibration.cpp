@@ -1,12 +1,13 @@
 #include <QMessageBox>
 #include "s_calibration.h"
+#include "s_measure.h"
 
 s_CALIBRATION::s_CALIBRATION(QObject *parent) : State(parent, "CALIBRATION")
 {
 }
 
 void s_CALIBRATION::idle(MainWindow *p){
-    qDebug() << "CAL";
+
 }
 
 void s_CALIBRATION::calibration(MainWindow *p){
@@ -25,5 +26,27 @@ void s_CALIBRATION::calibration(MainWindow *p){
 
 
 void s_CALIBRATION::measure(MainWindow *p){
-    qDebug() << "CAL";
+    if(!p->cal_parameter.isEmpty()){
+        p->setCurrent(new s_MEASURE(p));
+
+        p->getCurrent();
+
+        //change process function
+        QObject::disconnect(p->tcpSocket, SIGNAL(readyRead()), p, SLOT(processCalibration()));
+        QObject::connect(p->tcpSocket, SIGNAL(readyRead()), p, SLOT(processVoltimetry()));
+
+        //signal to request data
+        QObject::connect(this, SIGNAL(requestData()), p, SLOT(sendData()));
+
+        //Request voltimetry
+        emit(requestData());
+
+        delete this;
+    }
+    else{
+        QString invState = "Calibration not concluded";
+        QMessageBox::critical(0, "Invalid State", invState);
+
+        qDebug() << invState;
+    }
 }
