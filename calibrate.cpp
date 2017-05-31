@@ -34,7 +34,7 @@ void Calibrate::calc_par(QByteArray *data){
 
     parseASCII(&x,&y, data);
 
-    QVector<double> par = calibration_parameter(&x,&y);
+    QVector<double> par = least_square(&x,&y);
     QString m = QString::number(par.at(0));
     QString q = QString::number(par.at(1));
 

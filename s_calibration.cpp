@@ -38,9 +38,6 @@ void s_CALIBRATION::measure(MainWindow *p){
         //signal to request data
         QObject::connect(this, SIGNAL(requestData()), p, SLOT(sendData()));
 
-        //Request voltimetry
-        emit(requestData());
-
         delete this;
     }
     else{

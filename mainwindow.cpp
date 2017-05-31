@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setCurrent(new s_IDLE(this));
     getCurrent();
+
+    chart_win = new Chart();
+    chart_win->show();
 }
 
 MainWindow::~MainWindow()
@@ -82,6 +85,7 @@ void MainWindow::instanciateConnection(){
         //connect socket new data with calibration process fn
         QObject::connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(processCalibration()));
 
+
     }
 
 }
@@ -104,26 +108,36 @@ void MainWindow::processCalibration(){
 }
 
 void MainWindow::processVoltimetry(){
-    qDebug() << "READ:";
+    qDebug() << volt;
+
+    //qDebug() << "READ:";
     QByteArray readData = tcpSocket->readAll();
-    qDebug() << readData;
+    //qDebug() << readData;
 
     QVector<double> v,I;
     parseASCII(&v,&I,&readData);
 
 
     //qDebug()<< cal_parameter.isEmpty();
-    double I_cal = cal_line(v.at(0),cal_parameter.at(0), cal_parameter.at(1));
-    double out = I.at(0) - I_cal;
+    //concentration
+    double I_cal = cal_line(I.at(0), cal_parameter.at(0), cal_parameter.at(1));
+    double out = I.at(0);
 
-    qDebug() << "V:" << v.at(0);
-    qDebug() << "I:" << out;
+    if(volt == 100){
+        ui->textBrowser->setText("CONCENTRATION VALUE at 100:");
+        ui->textBrowser->append(QString::number(I_cal));
 
+    }
+
+    qDebug() << v.at(0) << out << endl;
     //qDebug() << "I_cal:";
     //qDebug() << I_cal;
+    chart_win->plot(v.at(0), out);
 
     ui->lcdV->setText(QString::number(v.at(0)));
     ui->lcdI->setText(QString::number(out));
+
+    volt++;
 }
 
 void MainWindow::showCalibrationDialog(){

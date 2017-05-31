@@ -6,7 +6,7 @@
 
 QT       += core gui network
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = Nanosystems
 TEMPLATE = app
@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     s_idle.cpp \
     s_calibration.cpp \
     calibrate.cpp \
-    s_measure.cpp
+    s_measure.cpp \
+    qcustomplot.cpp \
+    chart.cpp
 
 HEADERS  += mainwindow.h \
     helper.h \
@@ -29,10 +31,13 @@ HEADERS  += mainwindow.h \
     s_idle.h \
     s_calibration.h \
     calibrate.h \
-    s_measure.h
+    s_measure.h \
+    qcustomplot.h \
+    chart.h
 
 FORMS    += mainwindow.ui \
-    calibrate.ui
+    calibrate.ui \
+    chart.ui
 
 OTHER_FILES +=
 

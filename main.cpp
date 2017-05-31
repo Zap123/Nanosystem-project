@@ -2,6 +2,8 @@
 #include <QApplication>
 #include <QFile>
 
+
+/*
 void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
      QString txt;
@@ -16,8 +18,8 @@ void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QStr
              fprintf(stderr, "Warning: %s \n", localMsg.constData());
          break;
          case QtInfoMsg:
-            txt = QString("Info: %1").arg(msg);
-            fprintf(stderr, "Info: %s \n", localMsg.constData());
+            txt = QString("%1").arg(msg);
+            fprintf(stderr, "%s", localMsg.constData());
             break;
          case QtCriticalMsg:
              txt = QString("Critical: %1").arg(msg);
@@ -29,15 +31,15 @@ void MessageOutput(QtMsgType type, const QMessageLogContext &context, const QStr
          break;
      }
      QFile outFile("logFile.txt");
-     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+     outFile.open(QIODevice::WriteOnly| QIODevice::Append);
      QTextStream ts(&outFile);
      ts << txt << endl;
 }
-
+*/
 
 int main(int argc, char *argv[])
 {
-    qInstallMessageHandler(MessageOutput); //Redirect output to Logfile
+    //qInstallMessageHandler(MessageOutput); //Redirect output to Logfile
 
     QApplication a(argc, argv);
     MainWindow w;

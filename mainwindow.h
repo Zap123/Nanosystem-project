@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QMainWindow>
 #include "calibrate.h"
+#include "chart.h"
 #include <QDebug>
 
 namespace Ui {
@@ -22,6 +23,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     Calibrate *cal_win = 0;
+    Chart *chart_win = 0;
+    int volt =1;
 
     //Network Config
     QTcpSocket *tcpSocket = 0;

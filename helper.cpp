@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <helper.h>
 
-void test_parseASCII(QVector<double> *x_v, QVector<double> *y_i, QByteArray *q){
+void test_parseASCII(QVector<double> *x_v, QVector<double> *y_i){
     QFile file(":/test/testASCII.txt");
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "Error:" << file.errorString();
@@ -26,7 +26,7 @@ void parseASCII(QVector<double> *x_v, QVector<double> *y_i, QByteArray *q){
 
         foreach(QByteArray line, lines){
             QList<QByteArray> element = line.split(' ');
-            qDebug(line);
+            //qDebug(line);
             if(!line.isEmpty()){
                 x_v->append(element.first().toDouble());
                 y_i->append(element.last().toDouble());
@@ -35,7 +35,7 @@ void parseASCII(QVector<double> *x_v, QVector<double> *y_i, QByteArray *q){
 
 }
 
-QVector<double> calibration_parameter(QVector<double> *x_v, QVector<double> *y_i){
+QVector<double> calibration_parameter(const QVector<double> *x_v, const QVector<double> *y_i){
     double x_a, x_b, y_a, y_b;
     double m, q;
     QVector<double> parameter;
@@ -53,6 +53,41 @@ QVector<double> calibration_parameter(QVector<double> *x_v, QVector<double> *y_i
 
     return parameter;
 }
+
+
+QVector<double> least_square(const QVector<double> *x_v, const QVector<double> *y_i){
+    double m = 0, q = 0;
+    QVector<double> parameter;
+
+    // mean of x and y
+    double mu_x = 0;
+    double mu_y = 0;
+
+    int n = x_v->size();
+    for(int i=0; i<n; i++){
+        mu_x += x_v->at(i)/n;
+        mu_y += y_i->at(i)/n;
+    }
+
+    double num = 0;
+    double denum = 0;
+    //Least square
+    for(int i=0; i<n; i++){
+        double xi = x_v->at(i);
+        double yi = y_i->at(i);
+
+        num += (xi- mu_x)*(yi-mu_y);
+        denum += (xi-mu_x)*(xi-mu_x);
+    }
+    m=num/denum;
+    q = mu_y - m*mu_x;
+
+    parameter.append(m);
+    parameter.append(q);
+
+    return parameter;
+}
+
 
 double cal_line(double x, double m, double q){
     return m*x+q;
