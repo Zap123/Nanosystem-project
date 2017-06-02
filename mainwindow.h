@@ -28,8 +28,9 @@ public:
 
     //Network Config
     QTcpSocket *tcpSocket = 0;
-    const QString ipAddress = "localhost";
-    const int port = 5040;
+
+    const QString ipAddress = "192.168.1.10";
+    const int port = 7;
 
     void setCurrent(State *s){
         current = s;

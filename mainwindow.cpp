@@ -132,8 +132,8 @@ void MainWindow::processVoltimetry(){
     qDebug() << v.at(0) << out << endl;
     //qDebug() << "I_cal:";
     //qDebug() << I_cal;
-    chart_win->plot(v.at(0), out);
-
+    chart_win->plot(v.at(0), I_cal);
+    qDebug() << I_cal;
     ui->lcdV->setText(QString::number(v.at(0)));
     ui->lcdI->setText(QString::number(out));
 

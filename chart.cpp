@@ -12,8 +12,8 @@ Chart::Chart(QWidget *parent) :
     // make left and bottom axes transfer their ranges to right and top axes:
     connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
 
-    ui->customPlot->xAxis->setRange(0, 0.04);
-    ui->customPlot->yAxis->setRange(123676, 178189);
+    ui->customPlot->xAxis->setRange(-1.2, 1.2);
+    ui->customPlot->yAxis->setRange(1e+09, 15e+09);
     ui->customPlot->replot();
 }
 
@@ -25,6 +25,8 @@ Chart::~Chart()
 void Chart::plot(double x, double y){
     ui->customPlot->graph(0)->addData(x, y);
     // make key axis range scroll with the data (at a constant range size of 8):
-    ui->customPlot->xAxis->setRange(x, 20, Qt::AlignRight);
+    //ui->customPlot->yAxis->setRange(y, 10, Qt::AlignRight);
+    //ui->customPlot->xAxis->setRange(x, 10, Qt::AlignRight);
+
     ui->customPlot->replot();
 }
