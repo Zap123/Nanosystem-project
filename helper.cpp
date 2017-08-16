@@ -1,3 +1,10 @@
+/**
+    Helper functions
+
+    @author Luca Costa
+    @version 1
+*/
+
 #include <QFile>
 #include <QVector>
 #include <QDebug>
@@ -21,7 +28,6 @@ void test_parseASCII(QVector<double> *x_v, QVector<double> *y_i){
 
 void parseASCII(QVector<double> *x_v, QVector<double> *y_i, QByteArray *q){
 
-
         QList<QByteArray> lines = q->split('\n');
 
         foreach(QByteArray line, lines){
@@ -32,7 +38,6 @@ void parseASCII(QVector<double> *x_v, QVector<double> *y_i, QByteArray *q){
                 y_i->append(element.last().toDouble());
             }
         }
-
 }
 
 QVector<double> calibration_parameter(const QVector<double> *x_v, const QVector<double> *y_i){
@@ -90,5 +95,5 @@ QVector<double> least_square(const QVector<double> *x_v, const QVector<double> *
 
 
 double cal_line(double x, double m, double q){
-    return m*x+q;
+    return (x-q)/m;
 }

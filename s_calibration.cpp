@@ -1,3 +1,10 @@
+/**
+    Calibration State of the State Machine
+
+    @author Luca Costa
+    @version 1
+*/
+
 #include <QMessageBox>
 #include "s_calibration.h"
 #include "s_measure.h"

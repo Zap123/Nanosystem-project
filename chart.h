@@ -15,6 +15,9 @@ public:
     explicit Chart(QWidget *parent = 0);
     ~Chart();
     void plot(double x, double y);
+    double min_C = 0;
+    double max_C = 100000;
+    bool first=true;
 
 private:
     Ui::Chart *ui;

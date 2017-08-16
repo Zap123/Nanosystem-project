@@ -1,3 +1,10 @@
+/**
+    Main window
+
+    @author Luca Costa
+    @version 1
+*/
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "s_idle.h"
@@ -16,13 +23,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     chart_win = new Chart();
     chart_win->show();
+
+    cal_data = new QByteArray();
+
+    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete current;
+    delete chart_win;
+    delete cal_win;
     tcpSocket->close();
+    this->close();
 }
 
 void MainWindow::idle(){
@@ -103,15 +117,25 @@ void MainWindow::processCalibration(){
     qDebug() << "READ:";
     QByteArray readData = tcpSocket->readAll();
     qDebug() << readData;
+    cal_data->append(readData);
 
-    cal_win->calc_par(&readData);
+    cal_packet = cal_data->count("\n");
+
+    if(cal_packet >= 11000){ //11 voltametry cycles
+        cal_win->calc_par(cal_data);
+        delete cal_data;
+        cal_data = new QByteArray();
+    }
+
+    qDebug()  << cal_packet;
+
 }
 
 void MainWindow::processVoltimetry(){
-    qDebug() << volt;
-
+    //qDebug() << volt;
     //qDebug() << "READ:";
-    QByteArray readData = tcpSocket->readAll();
+    QByteArray readData = tcpSocket->readLine();
+
     //qDebug() << readData;
 
     QVector<double> v,I;
@@ -122,22 +146,24 @@ void MainWindow::processVoltimetry(){
     //concentration
     double I_cal = cal_line(I.at(0), cal_parameter.at(0), cal_parameter.at(1));
     double out = I.at(0);
-
-    if(volt == 100){
-        ui->textBrowser->setText("CONCENTRATION VALUE at 100:");
-        ui->textBrowser->append(QString::number(I_cal));
-
+    //100, 1100, 2100
+    if(v.at(0) == 0.4){ //max concentration v:0.4
+        if(volt % 2 > 0){
+            ui->textBrowser->setText("CONCENTRATION VALUE:");
+            //ui->textBrowser->append(QString::number(volt));
+            ui->textBrowser->append(QString::number(I_cal));
+            qDebug() << (volt % 2);
+        }
+        volt++;
     }
 
-    qDebug() << v.at(0) << out << endl;
+    //qDebug() << v.at(0) <<" - " << out << endl;
     //qDebug() << "I_cal:";
     //qDebug() << I_cal;
     chart_win->plot(v.at(0), I_cal);
-    qDebug() << I_cal;
+    //qDebug() << I_cal;
     ui->lcdV->setText(QString::number(v.at(0)));
     ui->lcdI->setText(QString::number(out));
-
-    volt++;
 }
 
 void MainWindow::showCalibrationDialog(){

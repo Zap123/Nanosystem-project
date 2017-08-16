@@ -1,3 +1,11 @@
+/**
+    Calibration window
+
+    @author Luca Costa
+    @version 1
+*/
+
+
 #include <QDebug>
 #include "helper.h"
 #include "calibrate.h"
@@ -32,6 +40,7 @@ void Calibrate::calc_par(QByteArray *data){
     QVector<double> x;
     QVector<double> y;
 
+
     parseASCII(&x,&y, data);
 
     QVector<double> par = least_square(&x,&y);
@@ -44,9 +53,8 @@ void Calibrate::calc_par(QByteArray *data){
     ui->calibrationText->append("Calibration finished, please start the measuring now");
 
 
-    //TODO: keep value for next stage
-    qDebug() << x;
-    qDebug() << y;
+    //qDebug() << x;
+    //qDebug() << y;
 
     ui->pushButton->hide();
 }

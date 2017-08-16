@@ -1,3 +1,10 @@
+/**
+    Measure State of the State Machine
+
+    @author Luca Costa
+    @version 1
+*/
+
 #include "s_measure.h"
 #include <QMessageBox>
 

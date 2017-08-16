@@ -24,13 +24,19 @@ public:
     ~MainWindow();
     Calibrate *cal_win = 0;
     Chart *chart_win = 0;
-    int volt =1;
+    int volt = 1;
+    int cal_packet = 0;
+    QByteArray *cal_data;
+    bool enter = true;
 
     //Network Config
     QTcpSocket *tcpSocket = 0;
 
     const QString ipAddress = "192.168.1.10";
     const int port = 7;
+
+    //const QString ipAddress = "localhost";
+    //const int port = 5040;
 
     void setCurrent(State *s){
         current = s;

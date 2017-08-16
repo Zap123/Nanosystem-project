@@ -1,3 +1,10 @@
+/**
+    IDLE State of the State Machine
+
+    @author Luca Costa
+    @version 1
+*/
+
 #include <QDebug>
 #include <QMessageBox>
 #include "s_idle.h"
