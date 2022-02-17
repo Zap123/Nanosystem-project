@@ -1,5 +1,5 @@
 # Nanosystem-project
-Voltametry reading project for the Nanosystem 2016 - 2017 course
+Voltammetry reading project for the Nanosystem 2016 - 2017 course
 
 The project consisted on developing an interface with Qt Creator(C++) that had to be running on a Raspberry PI 3 
 and was able to parse voltammetry readings from a [biosensor](https://en.wikipedia.org/wiki/Biosensor).
